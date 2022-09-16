@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class analisPath {
-    protected static String countFiles() {
+public class AnalysPath {
+    protected String countFiles() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Введи что-ли путь к папке... или давай как обычно?");
         String path = sc.nextLine();
@@ -35,7 +35,7 @@ public class analisPath {
         }
     }
 
-    protected static ArrayList<String> filesArray (String path){
+    protected ArrayList<String> filesArray (String path){
         ArrayList<String> fullNames = new ArrayList<>();
         File[] pathNames;
         File f = new File(path);

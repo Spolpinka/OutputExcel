@@ -18,6 +18,9 @@ public class CreateContent {
             for (File pathName : pathNames) {
                 fullNamesForSubdir.add(pathName.getPath());
             }
+            int maxSumOfFiles = 100;
+            if (fullNamesForSubdir != null && fullNamesForSubdir.size() > maxSumOfFiles) return "Больше " +
+                    maxSumOfFiles + "в поддиректории " + filename + " ты мне всю оперативку забил, балбес!";
             try {
                 StringBuilder contentBuilder = new StringBuilder(content);
                 for (String s : fullNamesForSubdir) {
