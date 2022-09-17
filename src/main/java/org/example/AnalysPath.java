@@ -7,13 +7,10 @@ import java.util.Scanner;
 public class AnalysPath {
     protected String countFiles() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Введи что-ли путь к папке... или давай как обычно?");
+        System.out.println("Введи что-ли путь к папке... ");
         String path = sc.nextLine();
         while (true) {
-            if (path.contains("давай как обычно")) {
-                sc.close();
-                return "D:\\firelabs\\21052022\\json";
-            } else if (new File(path).isFile()) {
+            if (new File(path).isFile()) {
                 System.out.println("Вообще то это просто файл, давай не косячь, дай имя папки!");
                 path = sc.nextLine();
 
