@@ -8,9 +8,31 @@ public class Analyse {
 
     public static void main(String[] args) {
         //запрашиваем путь к папке, содержашей файлы для анализа
-        AnalysPath analysPath = new AnalysPath();
+        AnalysePath analysPath = new AnalysePath();
         String path = analysPath.countFiles();
+        if (AnalysePath.numbOfChoice == 1 || AnalysePath.numbOfChoice == 2) {
+            analyseXml(path);
+        } else if (AnalysePath.numbOfChoice == 3) {
+            SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
+            ArrayList<String> fullListOfResolutions = snor.searching(path);
 
+        }
+
+        //анализ database на нарушения со стороны пристава
+        if (AnalysePath.numbOfChoice == 2) {
+            FormingComplaint formingComplaint = new FormingComplaint();
+            formingComplaint.analisForComplaint(fullBase, path);
+        }
+
+        if (AnalysePath.turnOff) {
+            TurnOff turnOff = new TurnOff();
+            turnOff.getTurnOff();
+        }
+
+    }
+
+    public static void analyseXml(String path) {
+        AnalysePath analysPath = new AnalysePath();
         //получаем перечень наименований файлов из папки
         ArrayList<String> fullNames = analysPath.filesArray(path);
 
@@ -31,6 +53,7 @@ public class Analyse {
                 "Место работы",
                 "Недвижимость",
                 "Иное",
+                "Остаток долга по данным ФССП",//ниже этой строки можно вставлять новые поля, чтобы индексы не уехали
                 "Фамилия",
                 "Имя",
                 "Отчество",
@@ -78,16 +101,6 @@ public class Analyse {
             forLastThread.add(fullNames.get(0));
             fullNames.remove(0);
         }
-       //печатает список первого потока
-        /*for (int i = 0; i < forFirstThread.size(); i++) {
-            System.out.println(forFirstThread.get(i));
-        }*/
-        System.out.println("это был список файлов первого потока");
-        //печатаем список последнего потока
-        /*for (int i = 0; i < forLastThread.size(); i++) {
-            System.out.println(forLastThread.get(i));
-        }*/
-
         //создаем потоки
         MultyThread multyThread1 = new MultyThread(forFirstThread, 0);
         multyThread1.start();
@@ -97,18 +110,7 @@ public class Analyse {
         multyThread3.start();
         MultyThread multyThread4 = new MultyThread(forLastThread, lengthForFirst*3);
         multyThread4.start();
-        //заполняем базу по всем файлам
-        /*CountAllDocs countAllDocs = new CountAllDocs();
-        int countOfLines = 0;
-        for (int i = 0; i < forLastThread.size(); i++) {
 
-            //прогоняем файлы через счетчик
-            ArrayList<String> counts = countAllDocs.countDocs(forLastThread.get(i));
-            for (int j = 0; j < counts.size(); j++) {
-                fullBase[i+1][j] = counts.get(j);
-                //System.out.println(counts.get(j));
-            }
-        }*/
         //ждем, пока все потоки отработают
         try {
             multyThread1.join();
@@ -123,12 +125,5 @@ public class Analyse {
 
         //выводим в эксель
         Output.excel(fullBase, path, "MainReport");
-
-        //анализ database на нарушения со стороны пристава
-        FormingComplaint formingComplaint = new FormingComplaint();
-        formingComplaint.analisForComplaint(fullBase, path);
-
     }
-
-
 }

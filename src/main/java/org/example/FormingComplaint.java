@@ -1,10 +1,11 @@
 package org.example;
 
+import java.text.ParseException;
+
 public class FormingComplaint {
-    static int countOfComplaint = 0;
     String firstPartForNormal = "ООО \"ВПК-Капитал\", проанализировав отчет о действиях судебного-пристава исполнителя в" +
             " рамках исполнительного производства № ";
-    String firstPartForReject = "Посредством обращения через ЕПГУ, представитель взыскателя обратился с ходатайством №  ";
+    String firstPartForReject = "Посредством ЕПГУ, представитель взыскателя обратился с ходатайством №  ";
     String secondPartForReject = "о предоставлении информации по исполнительному производству\n" +
             "Подтверждение личности гражданина или представителя юридического лица происходит автоматически " +
             "при входе в личный кабинет посредством ЕСИА, либо на основании принадлежащего гражданину сертификата " +
@@ -16,7 +17,8 @@ public class FormingComplaint {
             "Уведомление об отказе в подтверждении полномочий за подписью судебного пристава-исполнителя, в котором " +
             "последний указывает, что обращение не может быть рассмотрено, так как для данного типа заявления требуется " +
             "обязательное подтверждение полномочий заявителя.";
-    String secondPart = " сообщает о следующих фактах, имеющих признаки незаконного бездействия пристава-исполнителя:\n";
+    String secondPart = ", сообщает о следующих фактах, имеющих признаки незаконного бездействия " +
+            "соответствующего пристава-исполнителя:\n";
     String lastPartForAll = "В соответствии со ст. 24 ФЗ «Об исполнительном производстве» судебный пристав-исполнитель обязан " +
             "уведомить лиц, участвующих в исполнительном производстве о совершении исполнительных действий или о " +
             "применении мер принудительного исполнения не позднее следующего рабочего дня после их совершения или применения. \n" +
@@ -106,7 +108,9 @@ public class FormingComplaint {
         StringBuilder complaint = new StringBuilder();
         if (line[1].equals("Уведомление об отказе в предоставлении информации об исполнительном производстве")) {
             complaint.append(firstPartForReject).append(line[line.length - 1] + " ").append(secondPartForReject).append(lastPartForAll);
-        } else if (accounts(line).equals("") && placeOfWork(line).equals("") && transport(line).equals("") && estate(line).equals("")) {
+        } else if (accounts(line).equals("") && placeOfWork(line).equals("")
+                && transport(line).equals("") && estate(line).equals("")
+                && stopDeparture(line).equals("")) {
             return null;
         } else if (line[1].equals("Уведомление о ходе исполнительного производства")) {
             complaint.append(firstPartForNormal).append(line[2]).append(secondPart).append(accounts(line)).
@@ -194,7 +198,7 @@ public class FormingComplaint {
         } else if (transport != null && blockOfTransport > 0 && sumResolutionsForRealisation == 0) {
             return "- у должника обнаружено транспортное средство, вынесено Постановление о запрете регистрационных " +
                     "действий и действий по распоряжению в отношении транспортных средств, одновременно, не обнаружено " +
-                    "каких-либо Постановлений, свидетельствующих наличии процедуры реализации указанного транспортного средства\n";
+                    "каких-либо Постановлений, свидетельствующих о наличии процедуры реализации указанного транспортного средства,\n";
         }
         return s;
     }
@@ -226,4 +230,25 @@ public class FormingComplaint {
         return s;
     }
 
+    private String stopDeparture(String[] line) {
+        String s = "";
+        String sumOfStopsString = line[28]; //Постановление о временном ограничении на выезд должника из Российской Федерации
+        String sumOfDeptString = line[48];// сумма долга
+        float sumOfDebt = 0f;
+        int sumOfStops = 0;
+        try{
+            sumOfDebt = Float.parseFloat(sumOfDeptString);
+            sumOfStops = Integer.parseInt(sumOfStopsString);
+        } catch (Exception e){
+            System.out.println(e + "почему то проблема парсинга в сумме долга");
+        }
+        if (sumOfDebt > 30000 && sumOfStops < 1) {
+            s = "- при общей сумме задолженности по исполнительному производству превышающей " +
+                    "30 000 (тридцать тысяч) рублей, в сведениях о ходе исполнительного производства " +
+                    "отсутствуют отметки о вынесении приставом-исполнителем Постановления о временном " +
+                    "ограничении на выезд должника из Российской Федерации,\n";
+
+        }
+        return s;
+    }
 }

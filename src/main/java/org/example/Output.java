@@ -39,7 +39,9 @@ public class Output {
         System.out.println("Заливаем данные");
 
         for (String[] string : fullBase) {
-            if (string != null && string[string.length - 1] != null) {
+            if (string != null
+                    //&& string[string.length - 1] != null
+            ) {
                 Row row = sheet.createRow(rowNum++);
                 int colNum = 0;
                 for (int i = 0; i < string.length; i++) {
