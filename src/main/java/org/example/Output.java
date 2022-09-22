@@ -42,6 +42,12 @@ public class Output {
             if (string != null
                     //&& string[string.length - 1] != null
             ) {
+                if (string[0].equals("1-456261928142178")) {
+                    for (String s :
+                            string) {
+                        System.out.println(s);
+                    }
+                }
                 Row row = sheet.createRow(rowNum++);
                 int colNum = 0;
                 for (int i = 0; i < string.length; i++) {

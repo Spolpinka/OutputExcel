@@ -196,7 +196,11 @@ public class CountAllDocs {
         if (content.contains(openBoard)) {
             String subContent = content.substring(content.indexOf(openBoard) + openBoard.length(), content.indexOf(closeBoard));
             if (subContent.contains("<fssp:RegType>201") && subContent.contains("<fssp:DestType>01")) {
-                sumOfDebt = subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(closeSum));
+                if (subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(closeSum)).contains(".")) {
+                    sumOfDebt = subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(".") + 2);
+                } else {
+                    sumOfDebt = subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(closeSum));
+                }
             } else {
                 sumOfDebt = "ошибка, сумма задолженности не в первой части IPAcctRecords";
             }
