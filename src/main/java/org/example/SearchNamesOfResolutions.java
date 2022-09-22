@@ -1,11 +1,7 @@
 package org.example;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SearchNamesOfResolutions {
     public ArrayList<String> searching(String path) {
@@ -22,8 +18,7 @@ public class SearchNamesOfResolutions {
         ListOfNames lon = new ListOfNames();
 
 
-        int i;
-        for (i = 0; i < fullNames.size(); ++i) {
+        for (int i = 0; i < fullNames.size(); ++i) {
             ArrayList<String> namesTemp = namesSearch(lon.getArrayOfNames(), fullNames.get(i));
             for (int k = 0; k < namesTemp.size(); ++k) {
                 if (!lon.getArrayOfNames().contains(namesTemp.get(k))) {
@@ -44,27 +39,29 @@ public class SearchNamesOfResolutions {
         String content = "";
         ArrayList<String> names = new ArrayList();
 
-            try {
-                new File(filename);
-                content = Files.lines(Paths.get(filename)).reduce("", String::concat);
-            } catch (IOException var7) {
-                var7.printStackTrace();
-            }
+        CreateContent cc = new CreateContent();
+        content = cc.getString(filename, content);
 
         String startName = "<fssp:DocName>";
         String stopName = "</fssp:DocName>";
         String startTypeName = "<fssp:DocTypeName>";
         String stopTypeName = "</fssp:DocTypeName>";
 
-        while (content.contains(startName)) {
-            String result = content.substring(content.indexOf(startName) + startName.length(),
-                    content.indexOf(stopName));
-            if (!names.contains(result)) {
-                names.add(result);
+        if (content.indexOf(stopName) < content.indexOf(startName)) {
+            content = content.substring(0, content.indexOf(stopName)) +
+                    content.substring(content.indexOf(stopName) + stopName.length());
+        } else {
+            while (content.contains(startName)) {
+                String result = content.substring(content.indexOf(startName) + startName.length(),
+                        content.indexOf(stopName));
+                if (!names.contains(result)) {
+                    names.add(result);
+                }
+                content = content.substring(0, content.indexOf(startName))
+                        + content.substring(content.indexOf(stopName) + stopName.length());
             }
-            content = content.substring(0, content.indexOf(startName))
-                    + content.substring(content.indexOf(stopName) + stopName.length());
         }
+
 
         while (content.contains(startTypeName)) {
             String result = content.substring(content.indexOf(startTypeName) + startTypeName.length(),
@@ -73,8 +70,9 @@ public class SearchNamesOfResolutions {
                 names.add(result);
             }
             content = content.substring(0, content.indexOf(startTypeName))
-                    + content.substring(content.indexOf(stopTypeName));
+                    + content.substring(content.indexOf(stopTypeName) + stopTypeName.length());
         }
+
 
         return names;
     }

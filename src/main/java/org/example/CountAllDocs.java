@@ -25,7 +25,8 @@ public class CountAllDocs {
         counts.add(filename.substring(filename.lastIndexOf("\\") + 1, filename.lastIndexOf(" ")));
 
         //получаем строку из файла (если поддиректория, то строка содержит все файлы)
-        content = CreateContent.getString(filename, content);
+        CreateContent cc = new CreateContent();
+        content = cc.getString(filename, content);
         //выводим счетчик файлов
         System.out.println("анализируется файл № " + (countOfFiles + 1) + " " + filename);
         countOfFiles++;

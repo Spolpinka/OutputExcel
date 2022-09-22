@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CreateContent {
 
-    static String getString(String filename, String content) {
+    String getString(String filename, String content) {
         File file = new File(filename);
         if (file.isDirectory()) {
             File[] pathNames;
