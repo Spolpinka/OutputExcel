@@ -12,10 +12,11 @@ public class AnalysePath {
         Scanner sc = new Scanner(System.in);
         //делаем основной выбор
         System.out.println("Что будем делать:\n" +
-                "1 - анализировать xml файлы\n" +
-                "2 - анализировать и сразу выдавать файл с жалобами для отправки через Финуслуги\n" +
-                "3 - вести поиск имен всех упомянутых запросов, постановлений и т.п.\n" +
-                "Введи число 1 или 2 или 3");
+                "1 - анализировать xml файлы,\n" +
+                "2 - анализировать и сразу выдавать файл с жалобами для отправки через Финуслуги,\n" +
+                "3 - вести поиск имен всех упомянутых запросов, постановлений и т.п.,\n" +
+                "4 - сохранить выявленные имена в файл.\n" +
+                "Введи число");
         String choise = sc.nextLine();
         //защита от дурака
         String path = "";
@@ -29,7 +30,7 @@ public class AnalysePath {
             }
         }
         while (true) {
-            if (Integer.parseInt(choise) < 1 || Integer.parseInt(choise) > 3) {
+            if (Integer.parseInt(choise) < 1 || Integer.parseInt(choise) > 4) {
                 System.out.println("Введено число меньше 1 или больше 3, введи число от 1 до 3");
                 choise = sc.nextLine();
             } else{

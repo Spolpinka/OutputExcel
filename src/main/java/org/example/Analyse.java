@@ -10,12 +10,18 @@ public class Analyse {
         //запрашиваем путь к папке, содержашей файлы для анализа
         AnalysePath analysPath = new AnalysePath();
         String path = analysPath.countFiles();
-        if (AnalysePath.numbOfChoice == 1 || AnalysePath.numbOfChoice == 2) {
-            analyseXml(path);
-        } else if (AnalysePath.numbOfChoice == 3) {
-            SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
-            ArrayList<String> fullListOfResolutions = snor.searching(path);
-
+        switch (AnalysePath.numbOfChoice) {
+            case 1:
+            case 2:
+                analyseXml(path);
+                break;
+            case 3:
+                SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
+                ArrayList<String> fullListOfResolutions = snor.searching(path);
+                break;
+            case 4:
+                ListOfNames lon = new ListOfNames();
+                lon.setArrayOfNames(new ArrayList<>());
         }
 
         //анализ database на нарушения со стороны пристава
