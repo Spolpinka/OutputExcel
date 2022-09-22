@@ -25,13 +25,17 @@ public class CountAllDocs {
         counts.add(filename.substring(filename.lastIndexOf("\\") + 1, filename.lastIndexOf(" ")));
 
         //получаем строку из файла (если поддиректория, то строка содержит все файлы)
-        content = CreateContent.getString(filename, content);
+        CreateContent cc = new CreateContent();
+        content = cc.getString(filename, content);
         //выводим счетчик файлов
         System.out.println("анализируется файл № " + (countOfFiles + 1) + " " + filename);
         countOfFiles++;
 
-        //разделитель для вычленения пояснений
+        //получаем текст пояснений к отказу
         GetTextOfError getTextOfError = new GetTextOfError();
+
+        //считываем сумма долга по данным ФССП
+        String sumOfDebt = sumOfDebt(content);
 
         //считываем ФИО пристава
         String nameIdentificator1 = "<fssp:AuthorExecutorName>";
@@ -132,7 +136,7 @@ public class CountAllDocs {
                     //acc = s.substring(s.indexOf("|") + 1, s.indexOf("|") + 20);
                     if (!accounts.toString().contains(acc)) {
                         accounts.append(acc).append(" ");
-                        if (!sumOFAcc.isEmpty() && Double.parseDouble(sumOFAcc) > 0){
+                        if (!sumOFAcc.isEmpty() && Double.parseDouble(sumOFAcc) > 0) {
                             countOFNotNullAccounts += 1;
                             sumOfFindedFunds += Double.parseDouble(sumOFAcc);//добавляем найденную сумму в общую
                             //System.out.println(sumOFAcc);
@@ -166,6 +170,7 @@ public class CountAllDocs {
         counts.add(placeOfWork.toString());
         counts.add(estate.toString());
         counts.add(other.toString());
+        counts.add(sumOfDebt);//здесь можно добавлять, что индексы не улетели
         counts.add(lastName);
         counts.add(firstName);
         counts.add(middleName);
@@ -176,10 +181,33 @@ public class CountAllDocs {
 
     private ArrayList<String> fillingOfCounts(ArrayList<String> counts) {
         SaveObjects so = new SaveObjects();
-        for (int i = 0; i < so.loadArray().size() + 7; i++) {
+        for (int i = 0; i < so.loadArray().size() + 8; i++) {
             counts.add("0");
         }
         return counts;
+    }
+
+    private String sumOfDebt(String content) {
+        String sumOfDebt = "";
+        String openBoard = "<fssp:IPAcctRecords>";
+        String closeBoard = "</fssp:IPAcctRecords>";
+        String openSum = "<fssp:Amount>";
+        String closeSum = "</fssp:Amount>";
+        if (content.contains(openBoard)) {
+            String subContent = content.substring(content.indexOf(openBoard) + openBoard.length(), content.indexOf(closeBoard));
+            if (subContent.contains("<fssp:RegType>201") && subContent.contains("<fssp:DestType>01")) {
+                if (subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(closeSum)).contains(".")) {
+                    sumOfDebt = subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(".") + 2);
+                } else {
+                    sumOfDebt = subContent.substring(subContent.indexOf(openSum) + openSum.length(), subContent.indexOf(closeSum));
+                }
+            } else {
+                sumOfDebt = "ошибка, сумма задолженности не в первой части IPAcctRecords";
+            }
+        } else {
+            sumOfDebt = null;
+        }
+        return sumOfDebt;
     }
 }
 
