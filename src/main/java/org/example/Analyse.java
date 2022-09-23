@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 public class Analyse {
@@ -130,6 +132,8 @@ public class Analyse {
         //Output.txt(fullBase, path);
 
         //выводим в эксель
-        Output.excel(fullBase, path, "MainReport");
+        GregorianCalendar gc = new GregorianCalendar();
+        String time = String.valueOf(gc.get(Calendar.DATE)) + gc.get(Calendar.HOUR) + gc.get(Calendar.MINUTE) + gc.get(Calendar.SECOND);
+        Output.excel(fullBase, path, "MainReport" + time);
     }
 }
