@@ -40,17 +40,29 @@ public class CountAllDocs {
         //считываем ФИО пристава
         String nameIdentificator1 = "<fssp:AuthorExecutorName>";
         String nameIdentificator2 = "</fssp:AuthorExecutorName>";
-        String fullName = content.substring(content.indexOf(nameIdentificator1) + nameIdentificator1.length(),
-                content.indexOf(nameIdentificator2));
-        String lastName = fullName.substring(0, fullName.indexOf(" "));
-        fullName = fullName.substring(fullName.indexOf(" ") + 1);
-        String firstName = fullName.substring(0, fullName.indexOf(" "));
-        String middleName = fullName.substring(fullName.indexOf(" ") + 1);
+        String lastName = "не указано ФИО пристава";
+        String firstName = "";
+        String middleName = "";
+        try {
+            String fullName = content.substring(content.indexOf(nameIdentificator1) + nameIdentificator1.length(),
+                    content.indexOf(nameIdentificator2));
+            lastName = fullName.substring(0, fullName.indexOf(" "));
+            fullName = fullName.substring(fullName.indexOf(" ") + 1);
+            firstName = fullName.substring(0, fullName.indexOf(" "));
+            middleName = fullName.substring(fullName.indexOf(" ") + 1);
+        } catch (Exception e) {
+            System.out.println("Нет имени пристава в файле" + filename);
+        }
 
         //считываем ID ФССП
         String startOfID = "<fssp:QueryNumber>";
         String endOfID = "</fssp:QueryNumber>";
-        String ID = content.substring(content.indexOf(startOfID) + startOfID.length(), content.indexOf(endOfID));
+        String ID = "идентификатор приставов отсутствует в файле " + filename;
+        try {
+            ID = content.substring(content.indexOf(startOfID) + startOfID.length(), content.indexOf(endOfID));
+        } catch (Exception e) {
+
+        }
 
         //определяем тип ответа
 
@@ -165,7 +177,7 @@ public class CountAllDocs {
         //добавляем счета и т.п.
         counts.add(accounts.toString());
         counts.add(countOFNotNullAccounts + "");
-        counts.add(sumOfFindedFunds + "");
+        counts.add(String.format("%.2f",sumOfFindedFunds));
         counts.add(transport.toString());
         counts.add(placeOfWork.toString());
         counts.add(estate.toString());

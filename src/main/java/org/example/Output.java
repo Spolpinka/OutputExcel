@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Output {
     static void txt(String[] @NotNull [] fullBase, String path) {
@@ -31,6 +33,7 @@ public class Output {
 
     static void excel(String[][] fullBase, String path, String xlsxFileName) {
         // String xlsxFileName = "report" + path.substring(path.lastIndexOf("\\") + 1) + ".xlsx";
+
         String fileName = path.substring(0, path.lastIndexOf("\\") + 1) + xlsxFileName + ".xlsx";
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Анализ ответов приставов");
@@ -39,15 +42,7 @@ public class Output {
         System.out.println("Заливаем данные");
 
         for (String[] string : fullBase) {
-            if (string != null
-                    //&& string[string.length - 1] != null
-            ) {
-                if (string[0].equals("1-456261928142178")) {
-                    for (String s :
-                            string) {
-                        System.out.println(s);
-                    }
-                }
+            if (string != null) {
                 Row row = sheet.createRow(rowNum++);
                 int colNum = 0;
                 for (int i = 0; i < string.length; i++) {

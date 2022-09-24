@@ -1,6 +1,8 @@
 package org.example;
 
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class FormingComplaint {
     String firstPartForNormal = "ООО \"ВПК-Капитал\", проанализировав отчет о действиях судебного-пристава исполнителя в" +
@@ -82,8 +84,10 @@ public class FormingComplaint {
         for (int i = 1; i < fullbase.length; i++) {
             baseOfComplaint[i] = analysAllViolations(fullbase[i], namesOfColumns.length);
         }
-
-        Output.excel(baseOfComplaint, path, "reportComplains");
+        if (AnalysePath.needComplaintFile) {
+            GetTime gt = new GetTime();
+            Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
+        }
 
 
     }
