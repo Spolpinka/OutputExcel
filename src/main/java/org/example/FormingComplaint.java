@@ -84,9 +84,8 @@ public class FormingComplaint {
         for (int i = 1; i < fullbase.length; i++) {
             baseOfComplaint[i] = analysAllViolations(fullbase[i], namesOfColumns.length);
         }
-        GregorianCalendar gc = new GregorianCalendar();
-        String time = String.valueOf(gc.get(Calendar.DATE)) + gc.get(Calendar.HOUR) + gc.get(Calendar.MINUTE) + gc.get(Calendar.SECOND);
-        Output.excel(baseOfComplaint, path, "reportComplains" + time);
+        GetTime gt = new GetTime();
+        Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
 
 
     }
