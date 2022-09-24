@@ -84,8 +84,10 @@ public class FormingComplaint {
         for (int i = 1; i < fullbase.length; i++) {
             baseOfComplaint[i] = analysAllViolations(fullbase[i], namesOfColumns.length);
         }
-        GetTime gt = new GetTime();
-        Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
+        if (AnalysePath.needComplaintFile) {
+            GetTime gt = new GetTime();
+            Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
+        }
 
 
     }

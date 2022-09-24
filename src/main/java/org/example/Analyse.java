@@ -10,33 +10,38 @@ public class Analyse {
 
     public static void main(String[] args) {
         //запрашиваем путь к папке, содержашей файлы для анализа
-        AnalysePath analysPath = new AnalysePath();
-        String path = analysPath.countFiles();
-        switch (AnalysePath.numbOfChoice) {
-            case 1:
-            case 2:
-                analyseXml(path);
+        while (!AnalysePath.exit) {
+            AnalysePath analysPath = new AnalysePath();
+            String path = analysPath.countFiles();
+
+            switch (AnalysePath.numbOfChoice) {
+                case 1:
+                    analyseXml(path);
+                    break;
+                case 2:
+                    analyseXml(path);
+                    FormingComplaint formingComplaint = new FormingComplaint();
+                    formingComplaint.analisForComplaint(fullBase, path);
+                    break;
+                case 3:
+                    SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
+                    ArrayList<String> fullListOfResolutions = snor.searching(path);
+                    break;
+                case 4:
+                    ListOfNames lon = new ListOfNames();
+                    lon.setArrayOfNames(new ArrayList<>());
+                    break;
+            }
+
+            if (AnalysePath.turnOff) {
+                TurnOff turnOff = new TurnOff();
+                turnOff.getTurnOff();
+            }
+            if (AnalysePath.exit) {
                 break;
-            case 3:
-                SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
-                ArrayList<String> fullListOfResolutions = snor.searching(path);
-                break;
-            case 4:
-                ListOfNames lon = new ListOfNames();
-                lon.setArrayOfNames(new ArrayList<>());
-        }
+            }
 
-        //анализ database на нарушения со стороны пристава
-        if (AnalysePath.numbOfChoice == 2) {
-            FormingComplaint formingComplaint = new FormingComplaint();
-            formingComplaint.analisForComplaint(fullBase, path);
         }
-
-        if (AnalysePath.turnOff) {
-            TurnOff turnOff = new TurnOff();
-            turnOff.getTurnOff();
-        }
-
     }
 
     public static void analyseXml(String path) {
@@ -144,6 +149,8 @@ public class Analyse {
 
         //выводим в эксель
         GetTime gt = new GetTime();
-        Output.excel(fullBase, path, "MainReport" + gt.getTime());
+        if (AnalysePath.needAnalyseFile) {
+            Output.excel(fullBase, path, "MainReport" + gt.getTime());
+        }
     }
 }
