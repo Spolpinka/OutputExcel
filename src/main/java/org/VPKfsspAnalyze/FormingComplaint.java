@@ -1,8 +1,4 @@
-package org.example;
-
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+package org.VPKfsspAnalyze;
 
 public class FormingComplaint {
     String firstPartForNormal = "ООО \"ВПК-Капитал\", проанализировав отчет о действиях судебного-пристава исполнителя в" +
@@ -72,8 +68,8 @@ public class FormingComplaint {
             "Приложение:\n" +
             "1. Доверенность представителя заявителя\n";
 
-    protected void analisForComplaint(String[][] fullbase, String path) {
-
+    protected void analyzeForComplaint(String path, boolean isNeedComplaintFile) {
+        String[][] fullbase = Analyse.fullBase;
         String[][] baseOfComplaint = new String[fullbase.length][6];
         String[] namesOfColumns = {"Внутренний ID", "Номер ИП", "Фамилия", "Имя", "Отчество", "Текст жалобы"};
         //устанавливаем названия столбцов
@@ -82,9 +78,9 @@ public class FormingComplaint {
         }
         //анализируем на нарушения и формируем текст жалоб
         for (int i = 1; i < fullbase.length; i++) {
-            baseOfComplaint[i] = analysAllViolations(fullbase[i], namesOfColumns.length);
+            baseOfComplaint[i] = analyzeAllViolations(fullbase[i], namesOfColumns.length);
         }
-        if (AnalysePath.needComplaintFile) {
+        if (isNeedComplaintFile) {
             GetTime gt = new GetTime();
             Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
         }
@@ -92,7 +88,7 @@ public class FormingComplaint {
 
     }
 
-    private String[] analysAllViolations(String[] counts, int width) {
+    private String[] analyzeAllViolations(String[] counts, int width) {
 
         String[] result = new String[width];
 
@@ -153,9 +149,7 @@ public class FormingComplaint {
         };
         int sumOfRecovery = 0;
         for (int i = 0; i < recovery.length; i++) {
-            if (recovery != null) {
-                sumOfRecovery += Integer.parseInt(recovery[i]);
-            }
+            sumOfRecovery += Integer.parseInt(recovery[i]);
         }
         //смотрим были ли ненулевые счета
         int notNullAccs = Integer.parseInt(line[42]);
@@ -263,10 +257,10 @@ public class FormingComplaint {
         String sumOfDeptString = line[62];// сумма долга
         float sumOfDebt = 0f;
         int sumOfStops = 0;
-        try{
+        try {
             sumOfDebt = Float.parseFloat(sumOfDeptString);
             sumOfStops = Integer.parseInt(sumOfStopsString);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e + "почему то проблема парсинга в сумме долга");
         }
         if (sumOfDebt > 30000f && sumOfStops < 1) {

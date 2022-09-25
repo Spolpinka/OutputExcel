@@ -1,47 +1,9 @@
-package org.example;
+package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class Analyse {
-    static String[][] fullBase;
-
-    public static void main(String[] args) {
-        //запрашиваем путь к папке, содержашей файлы для анализа
-        while (!AnalysePath.exit) {
-            AnalysePath analysPath = new AnalysePath();
-            String path = analysPath.countFiles();
-
-            switch (AnalysePath.numbOfChoice) {
-                case 1:
-                    analyseXml(path);
-                    break;
-                case 2:
-                    analyseXml(path);
-                    FormingComplaint formingComplaint = new FormingComplaint();
-                    formingComplaint.analisForComplaint(fullBase, path);
-                    break;
-                case 3:
-                    SearchNamesOfResolutions snor = new SearchNamesOfResolutions();
-                    ArrayList<String> fullListOfResolutions = snor.searching(path);
-                    break;
-                case 4:
-                    ListOfNames lon = new ListOfNames();
-                    lon.setArrayOfNames(new ArrayList<>());
-                    break;
-            }
-
-            if (AnalysePath.turnOff) {
-                TurnOff turnOff = new TurnOff();
-                turnOff.getTurnOff();
-            }
-            if (AnalysePath.exit) {
-                break;
-            }
-
-        }
-    }
-
-    public static void analyseXml(String path) {
+public class XmlAnalyze {
+    public void analyseXml(String path, boolean isNeedAnalyzeFile) {
         AnalysePath analysPath = new AnalysePath();
         //получаем перечень наименований файлов из папки
         ArrayList<String> fullNames = analysPath.filesArray(path);
@@ -53,6 +15,7 @@ public class Analyse {
 
         System.out.println("количество наименований документов в анализе - " + namesOfResolutions.size()
                 + "\n количество файлов для анализа " + fullNames.size() + " шт.");
+
 
         //массив строк с названиями дополнительных данных, которые будут в конце
         String[] addNames = new String[]{
@@ -69,24 +32,24 @@ public class Analyse {
                 "Отчество",
                 "ID запроса в ФССП"
         };
-        fullBase = new String[fullNames.size() + 1][3 + namesOfResolutions.size() + addNames.length];
+        Analyse.fullBase = new String[fullNames.size() + 1][3 + namesOfResolutions.size() + addNames.length];
         //устанавливаем верхнюю строку
-        fullBase[0][0] = "идентификатор";
-        fullBase[0][1] = "тип ответа";
-        fullBase[0][2] = "№ ИП / причина отказа";
+        Analyse.fullBase[0][0] = "идентификатор";
+        Analyse.fullBase[0][1] = "тип ответа";
+        Analyse.fullBase[0][2] = "№ ИП / причина отказа";
         for (int i = 0; i < namesOfResolutions.size(); i++) {
-            fullBase[0][i + 3] = namesOfResolutions.get(i);
+            Analyse.fullBase[0][i + 3] = namesOfResolutions.get(i);
         }
 
         for (int i = 0; i < addNames.length; i++) {
-            fullBase[0][i + 3 + namesOfResolutions.size()] = addNames[i];
+            Analyse.fullBase[0][i + 3 + namesOfResolutions.size()] = addNames[i];
         }
         //делим fullNames для распределения по потокам
         final int numberOfTheards = 4;
-        int lengthForFirst = (fullBase.length-1) / numberOfTheards;
-        int lengthForSecond = (fullBase.length-1) / numberOfTheards;
-        int lengthForThird = (fullBase.length-1) / numberOfTheards;
-        int lengthForLast = fullBase.length - (((fullBase.length-1) / numberOfTheards)*3);
+        int lengthForFirst = (Analyse.fullBase.length - 1) / numberOfTheards;
+        int lengthForSecond = (Analyse.fullBase.length - 1) / numberOfTheards;
+        int lengthForThird = (Analyse.fullBase.length - 1) / numberOfTheards;
+        int lengthForLast = Analyse.fullBase.length - (((Analyse.fullBase.length - 1) / numberOfTheards) * 3);
         /*System.out.println("высота массива " + fullBase.length);
         System.out.println("высота первого потока " + lengthForFirst);
         System.out.println("высота последнего потока " + lengthForLast);*/
@@ -123,21 +86,21 @@ public class Analyse {
         /*System.out.println("остаток массива имен после последнего выделения " + fullNames.size());
         System.out.println("длина массива для первого потока " + forFirstThread.size() + " а должна быть " + lengthForFirst);*/
         //создаем потоки
-        MultyThread multyThread1 = new MultyThread(forFirstThread, 0);
-        multyThread1.start();
-        MultyThread multyThread2 = new MultyThread(forSecondThread, lengthForFirst);
-        multyThread2.start();
-        MultyThread multyThread3 = new MultyThread(forThirdThread, lengthForFirst*2);
-        multyThread3.start();
-        MultyThread multyThread4 = new MultyThread(forLastThread, lengthForFirst*3);
-        multyThread4.start();
+        MultiThread multiThread1 = new MultiThread(forFirstThread, 0);
+        multiThread1.start();
+        MultiThread multiThread2 = new MultiThread(forSecondThread, lengthForFirst);
+        multiThread2.start();
+        MultiThread multiThread3 = new MultiThread(forThirdThread, lengthForFirst * 2);
+        multiThread3.start();
+        MultiThread multiThread4 = new MultiThread(forLastThread, lengthForFirst * 3);
+        multiThread4.start();
 
         //ждем, пока все потоки отработают
         try {
-            multyThread1.join();
-            multyThread2.join();
-            multyThread3.join();
-            multyThread4.join();
+            multiThread1.join();
+            multiThread2.join();
+            multiThread3.join();
+            multiThread4.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -146,8 +109,8 @@ public class Analyse {
 
         //выводим в эксель
         GetTime gt = new GetTime();
-        if (AnalysePath.needAnalyseFile) {
-            Output.excel(fullBase, path, "MainReport" + gt.getTime());
+        if (isNeedAnalyzeFile) {
+            Output.excel(Analyse.fullBase, path, "MainReport" + gt.getTime());
         }
     }
 }

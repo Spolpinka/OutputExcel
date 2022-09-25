@@ -1,13 +1,13 @@
-package org.example;
+package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class MultyThread extends Thread{
+public class MultiThread extends Thread{
     private final ArrayList<String> listOfFiles;
     private int numberOFPrevious;
 
 
-    public MultyThread(ArrayList<String> listOfFiles, int numberOFPrevious) {
+    public MultiThread(ArrayList<String> listOfFiles, int numberOFPrevious) {
         this.listOfFiles = listOfFiles;
         this.numberOFPrevious = numberOFPrevious;
     }
