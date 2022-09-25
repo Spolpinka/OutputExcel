@@ -1,9 +1,6 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 
 public class Analyse {
     static String[][] fullBase;
@@ -90,9 +87,9 @@ public class Analyse {
         int lengthForSecond = (fullBase.length-1) / numberOfTheards;
         int lengthForThird = (fullBase.length-1) / numberOfTheards;
         int lengthForLast = fullBase.length - (((fullBase.length-1) / numberOfTheards)*3);
-        System.out.println("высота массива " + fullBase.length);
+        /*System.out.println("высота массива " + fullBase.length);
         System.out.println("высота первого потока " + lengthForFirst);
-        System.out.println("высота последнего потока " + lengthForLast);
+        System.out.println("высота последнего потока " + lengthForLast);*/
         ArrayList<String> forFirstThread = new ArrayList<>();
         ArrayList<String> forSecondThread = new ArrayList<>();
         ArrayList<String> forThirdThread = new ArrayList<>();
@@ -102,19 +99,19 @@ public class Analyse {
             forFirstThread.add(fullNames.get(0));
             fullNames.remove(0);
         }
-        System.out.println("остаток массива имен после первого выделения " + fullNames.size());
+        //System.out.println("остаток массива имен после первого выделения " + fullNames.size());
         //для второго
         for (int i = 0; i < lengthForSecond; i++) {
             forSecondThread.add(fullNames.get(0));
             fullNames.remove(0);
         }
-        System.out.println("остаток массива имен после второго выделения " + fullNames.size());
+        //System.out.println("остаток массива имен после второго выделения " + fullNames.size());
         //для третьего
         for (int i = 0; i < lengthForThird; i++) {
             forThirdThread.add(fullNames.get(0));
             fullNames.remove(0);
         }
-        System.out.println("остаток массива имен после третьего выделения " + fullNames.size());
+        //System.out.println("остаток массива имен после третьего выделения " + fullNames.size());
         //для последнего
         for (int i = 0; i < lengthForLast; i++) {
             if (fullNames.size() == 0) {
@@ -123,8 +120,8 @@ public class Analyse {
             forLastThread.add(fullNames.get(0));
             fullNames.remove(0);
         }
-        System.out.println("остаток массива имен после последнего выделения " + fullNames.size());
-        System.out.println("длина массива для первого потока " + forFirstThread.size() + " а должна быть " + lengthForFirst);
+        /*System.out.println("остаток массива имен после последнего выделения " + fullNames.size());
+        System.out.println("длина массива для первого потока " + forFirstThread.size() + " а должна быть " + lengthForFirst);*/
         //создаем потоки
         MultyThread multyThread1 = new MultyThread(forFirstThread, 0);
         multyThread1.start();
