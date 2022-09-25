@@ -1,4 +1,4 @@
-package org.example;
+package org.VPKfsspAnalyze;
 
 public class GetTextOfError {
     protected String getText(String content, String fileName) {
