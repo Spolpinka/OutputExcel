@@ -2,7 +2,6 @@ package org.example;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.IllegalFormatConversionException;
 import java.util.Scanner;
 
 public class AnalysePath {
