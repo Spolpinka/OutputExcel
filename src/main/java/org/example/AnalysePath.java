@@ -13,9 +13,10 @@ public class AnalysePath {
     static boolean needComplaintFile = true;
 
     static boolean exit = false;
+    Scanner sc = new Scanner(System.in);
 
     protected String countFiles() {
-        Scanner sc = new Scanner(System.in);
+
         //делаем основной выбор
         System.out.println("Что будем делать:\n" +
                 "1 - анализировать xml файлы,\n" +
@@ -25,7 +26,6 @@ public class AnalysePath {
                 "0 - закрыть программу.\n" +
                 "Введи число");
         String choise = sc.nextLine();
-        choise = sc.nextLine();
         //защита от дурака
         String path = "";
         while (true) {
@@ -96,15 +96,15 @@ public class AnalysePath {
         }
 
         System.out.println("После окончания программы комп выключать?\n" +
-                "1 - да\n" +
-                "0 - нет");
+                "0 - нет\n" +
+                "1 - да");
         int y = choise0Or1(sc.nextLine());
         if (y == 0) {
             turnOff = false;
         } else {
             turnOff = true;
         }
-        sc.close();
+        //sc.close();
         return path;
     }
 
