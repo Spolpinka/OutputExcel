@@ -23,7 +23,7 @@ public class WinInterface extends JFrame {
         super(s);
         setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         clean = new JButton("Очистить все поля");
-        start = new JButton("Начать процесс");
+        start = new JButton("Начать процесс анализа");
         analyze = new JCheckBox("1. Анализ xml");
         complaint = new JCheckBox("2. Формирование жалоб");
         newResolutionsSearch = new JCheckBox("3. Поиск новых наименований постановлений");
@@ -68,14 +68,39 @@ public class WinInterface extends JFrame {
                 AddonThread thread1 = new AddonThread(analyze.isSelected(), complaint.isSelected(),
                         analyzeFile.isSelected(), complaintFile.isSelected(), turnOff.isSelected(), t1.getText());
                 thread1.start();
-
-
+                try {
+                    thread1.join();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             if (e.getSource() == clean) {
                 t1.setText(null);
                 t2.setText(null);
                 l3.setText("");
                 l4.setText("");
+                if (analyze.isSelected()) {
+                    analyze.doClick();
+                }
+                if (complaint.isSelected()) {
+                    complaint.doClick();
+                }
+                if (newResolutionsSearch.isSelected()) {
+                    newResolutionsSearch.doClick();
+                }
+                if (newResolutionsSave.isSelected()) {
+                    newResolutionsSave.doClick();
+                }
+                if (analyzeFile.isSelected()) {
+                    analyzeFile.doClick();
+                }
+                if (complaintFile.isSelected()) {
+                    complaintFile.doClick();
+                }
+                if (turnOff.isSelected()) {
+                    turnOff.doClick();
+                }
+
             }
 
         }
