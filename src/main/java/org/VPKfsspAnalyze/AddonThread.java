@@ -17,8 +17,8 @@ class AddonThread extends Thread {
     public void run() {
         XmlAnalyze xa = new XmlAnalyze();
         if (isNeedAnalyze) {
+            Analyse.setFieldInterface("привет из анализа xml");
             xa.analyseXml(path, isNeedAnalyzeFile);
-            Analyse.r.setl3("начали анализ xml");
         }
         if (isNeedComplaint) {
             FormingComplaint fc = new FormingComplaint();
