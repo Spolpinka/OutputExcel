@@ -31,16 +31,16 @@ class WinInterface extends JFrame {
         tool1.add(complaint);
         tool1.add(newResolutionsSearch);
         tool1.add(newResolutionsSave);
-        //l2 = new JLabel("нужны ли файлы?");
         analyzeFile = new JCheckBox("нужен ли файл для данных анализа?", false);
         complaintFile = new JCheckBox("нужен ли файл для жалоб?", false);
         l3 = new JLabel("");
         l4 = new JLabel("");
-        t1 = new JTextField(25);
+        t1 = new JTextField("путь до xml");
         t2 = new JTextField(25);
+        tool1.add(t1);
         add(tool1);
-        add(l1);
-        add(t1);
+        /*add(l1);
+        add(t1);*/
         add(analyzeFile);
         add(complaintFile);
         add(turnOff);
@@ -49,6 +49,7 @@ class WinInterface extends JFrame {
         eHandler handler = new eHandler();
         clean.addActionListener(handler);
         start.addActionListener(handler);
+        t1.addActionListener(handler);
         add(l3);
         add(l4);
     }
@@ -57,11 +58,11 @@ class WinInterface extends JFrame {
     public class eHandler implements ActionListener  {
 
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == start && checkPath(t1.getText())) {
+            if (e.getSource() == start) {
                 AddonThread thread1 = new AddonThread(analyze.isSelected(), complaint.isSelected(),
                         analyzeFile.isSelected(), complaintFile.isSelected(), turnOff.isSelected(), t1.getText());
-                l4.setText("Поехали анализировать! казалось бы");
                 thread1.start();
+                l4.setText("Поехали анализировать! казалось бы");
                 try {
                     thread1.join();
                 } catch (InterruptedException ex) {
