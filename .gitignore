@@ -2,3 +2,5 @@
 /pom.xml
 /target/
 /saveArray.xxx
+/.project
+/.classpath

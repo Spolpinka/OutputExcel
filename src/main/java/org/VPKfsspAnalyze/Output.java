@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Output {
+class Output {
     static void txt(String[] @NotNull [] fullBase, String path) {
         try (FileWriter writer = new FileWriter(path.substring(0, path.lastIndexOf('\\') + 1) + "result.txt", false)) {
             for (int i = 0; i < fullBase.length; i++) {

@@ -2,7 +2,7 @@ package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class CountAllDocs {
+class CountAllDocs {
     static int countOfFiles;
 
     public ArrayList<String> countDocs(String filename) {

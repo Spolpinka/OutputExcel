@@ -3,27 +3,28 @@ package org.VPKfsspAnalyze;
 import java.io.File;
 import java.util.ArrayList;
 
-public class SearchNamesOfResolutions {
+class SearchNamesOfResolutions {
     public ArrayList<String> searching(String path) {
         File f = new File(path);
         File[] pathNames = f.listFiles();
-        ArrayList<String> fullNames = new ArrayList();
+        ArrayList<String> fullNames = new ArrayList<>();
+        assert pathNames != null: "количество файлов для поиска - 0";
         System.out.println("количество файлов - " + pathNames.length);
 
-        for (int i = 0; i < pathNames.length; ++i) {
-            fullNames.add(pathNames[i].getPath());
+        for (File pathName : pathNames) {
+            fullNames.add(pathName.getPath());
         }
         /*SaveObjects so = new SaveObjects();
         ArrayList<String> namesOfResolutions = so.loadArray();*/
         ListOfNames lon = new ListOfNames();
 
 
-        for (int i = 0; i < fullNames.size(); ++i) {
-            ArrayList<String> namesTemp = namesSearch(lon.getArrayOfNames(), fullNames.get(i));
+        for (String fullName : fullNames) {
+            ArrayList<String> namesTemp = namesSearch(lon.getArrayOfNames(), fullName);
             for (int k = 0; k < namesTemp.size(); ++k) {
                 if (!lon.getArrayOfNames().contains(namesTemp.get(k))) {
                     lon.getArrayOfNames().add(namesTemp.get(k));
-                    System.out.println("в файле " + fullNames.get(i));
+                    System.out.println("в файле " + fullName);
                     System.out.println("обнаружено новое постановление: " + namesTemp.get(k));
                 }
             }

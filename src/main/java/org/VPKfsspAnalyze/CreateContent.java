@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class CreateContent {
+class CreateContent {
 
     String getString(String filename, String content) {
         File file = new File(filename);

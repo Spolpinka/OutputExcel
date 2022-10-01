@@ -1,6 +1,6 @@
 package org.VPKfsspAnalyze;
 
-public class GetTextOfError {
+class GetTextOfError {
     protected String getText(String content, String fileName) {
         String decomp = "<fssp:Text>";
         String decompEnd = "</fssp:Text>";

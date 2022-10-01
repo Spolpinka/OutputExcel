@@ -1,6 +1,6 @@
 package org.VPKfsspAnalyze;
 
-public class FormingComplaint {
+class FormingComplaint {
     String firstPartForNormal = "ООО \"ВПК-Капитал\", проанализировав отчет о действиях судебного-пристава исполнителя в" +
             " рамках исполнительного производства № ";
     String firstPartForReject = "Посредством ЕПГУ, представитель взыскателя обратился с ходатайством №  ";

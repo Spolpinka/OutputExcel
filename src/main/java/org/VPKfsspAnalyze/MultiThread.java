@@ -2,7 +2,7 @@ package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class MultiThread extends Thread{
+class MultiThread extends Thread{
     private final ArrayList<String> listOfFiles;
     private int numberOFPrevious;
 

@@ -3,7 +3,7 @@ package org.VPKfsspAnalyze;
 import java.io.File;
 import java.util.ArrayList;
 
-public class AnalysePath {
+class AnalysePath {
     protected ArrayList<String> filesArray(String path) {
         ArrayList<String> fullNames = new ArrayList<>();
         File[] pathNames;
