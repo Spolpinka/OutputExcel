@@ -3,7 +3,7 @@ package org.VPKfsspAnalyze;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ListOfNames {
+class ListOfNames {
     private ArrayList<String> namesOfResolutionsTmp = new ArrayList(Arrays.asList(
             //обязательные запросы
             "Постановление о возбуждении исполнительного производства",

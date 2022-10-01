@@ -2,7 +2,7 @@ package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class XmlAnalyze {
+class XmlAnalyze {
     public void analyseXml(String path, boolean isNeedAnalyzeFile) {
         AnalysePath analysPath = new AnalysePath();
         //получаем перечень наименований файлов из папки

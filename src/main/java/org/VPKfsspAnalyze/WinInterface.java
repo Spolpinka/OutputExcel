@@ -60,13 +60,15 @@ public class WinInterface extends JFrame {
     }
 
     //класс по обработке нажатий
-    public class eHandler implements ActionListener {
+    public class eHandler implements ActionListener  {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == start && checkPath(t1.getText())) {
-                l3.setText("Поехали!");
+                InterfaceTread it = new InterfaceTread();
+                it.start();
                 AddonThread thread1 = new AddonThread(analyze.isSelected(), complaint.isSelected(),
                         analyzeFile.isSelected(), complaintFile.isSelected(), turnOff.isSelected(), t1.getText());
+                l4.setText("Поехали анализировать! казалось бы");
                 thread1.start();
                 try {
                     thread1.join();
@@ -103,6 +105,12 @@ public class WinInterface extends JFrame {
 
             }
 
+        }
+    }
+
+    public class InterfaceTread extends Thread {
+        public void run(){
+            l3.setText("Привет из второго потока!");
         }
     }
 

@@ -3,7 +3,7 @@ package org.VPKfsspAnalyze;
 import java.io.*;
 import java.util.ArrayList;
 
-public class SaveObjects {
+class SaveObjects {
 
     public static void setFILENAMEBASE(String FILENAMEBASE) {
         SaveObjects.FILENAMEBASE = FILENAMEBASE;

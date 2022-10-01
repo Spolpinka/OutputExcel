@@ -2,7 +2,7 @@ package org.VPKfsspAnalyze;
 
 import java.util.ArrayList;
 
-public class CountAllDocs {
+class CountAllDocs {
     static int countOfFiles;
 
     public ArrayList<String> countDocs(String filename) {
@@ -61,14 +61,14 @@ public class CountAllDocs {
         try {
             ID = content.substring(content.indexOf(startOfID) + startOfID.length(), content.indexOf(endOfID));
         } catch (Exception e) {
-
+            System.out.println(ID);
         }
 
         //определяем тип ответа
 
         if (content.contains(reject)) {
             counts.add(reject);
-            counts.add(getTextOfError.getText(content, filename));
+            counts.add(getTextOfError.getText(content));
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -79,7 +79,7 @@ public class CountAllDocs {
             counts.add(notReject);
         } else if (content.contains(negative)) {
             counts.add(negative);
-            counts.add(getTextOfError.getText(content, filename));
+            counts.add(getTextOfError.getText(content));
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -88,7 +88,7 @@ public class CountAllDocs {
             return counts;
         } else if (content.contains(message)) {
             counts.add(message);
-            counts.add(getTextOfError.getText(content, filename));
+            counts.add(getTextOfError.getText(content));
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -191,16 +191,15 @@ public class CountAllDocs {
         return counts;
     }
 
-    private ArrayList<String> fillingOfCounts(ArrayList<String> counts) {
+    private void fillingOfCounts(ArrayList<String> counts) {
         SaveObjects so = new SaveObjects();
         for (int i = 0; i < so.loadArray().size() + 8; i++) {
             counts.add("0");
         }
-        return counts;
     }
 
     private String sumOfDebt(String content) {
-        String sumOfDebt = "";
+        String sumOfDebt;
         String openBoard = "<fssp:IPAcctRecords>";
         String closeBoard = "</fssp:IPAcctRecords>";
         String openSum = "<fssp:Amount>";

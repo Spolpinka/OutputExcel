@@ -1,10 +1,10 @@
 package org.VPKfsspAnalyze;
 
-public class AddonThread extends Thread {
+class AddonThread extends Thread {
     boolean isNeedAnalyze, isNeedComplaint, isNeedAnalyzeFile, isNeedComplaintFile, turnOff;
     String path;
 
-    public AddonThread(boolean isNeedAnalyze, boolean isNeedComplaint,
+    AddonThread(boolean isNeedAnalyze, boolean isNeedComplaint,
                        boolean isNeedAnalyzeFile, boolean isNeedComplaintFile,
                        boolean turnOff, String path) {
         this.isNeedAnalyze = isNeedAnalyze;

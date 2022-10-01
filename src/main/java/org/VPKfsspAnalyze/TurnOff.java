@@ -2,7 +2,7 @@ package org.VPKfsspAnalyze;
 
 import java.io.IOException;
 
-public class TurnOff {
+class TurnOff {
 
     public void getTurnOff() {
         Runtime runtime = Runtime.getRuntime();
