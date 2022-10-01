@@ -1,7 +1,6 @@
 package org.VPKfsspAnalyze;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class Analyse {
     static String[][] fullBase;
@@ -16,6 +15,7 @@ public class Analyse {
         r.setFocusableWindowState(true);
         r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         r.setSize(400, 500);
+        r.getGlassPane();
 
     }
 

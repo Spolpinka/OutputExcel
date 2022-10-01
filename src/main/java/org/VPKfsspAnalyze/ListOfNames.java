@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class ListOfNames {
-    private ArrayList<String> namesOfResolutionsTmp = new ArrayList(Arrays.asList(
+    private final ArrayList<String> namesOfResolutionsTmp = new ArrayList(Arrays.asList(
             //обязательные запросы
             "Постановление о возбуждении исполнительного производства",
             //запросы о счетах
@@ -210,9 +210,7 @@ class ListOfNames {
 
     protected void setArrayOfNames(ArrayList<String> list) {
         if (list != null) {
-            for (int i = 0; i < list.size(); i++) {
-                namesOfResolutionsTmp.add(list.get(i));
-            }
+            namesOfResolutionsTmp.addAll(list);
         }
         SaveObjects so = new SaveObjects();
         so.saveArray(namesOfResolutionsTmp);

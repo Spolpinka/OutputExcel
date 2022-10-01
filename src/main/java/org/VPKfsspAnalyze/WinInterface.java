@@ -8,16 +8,12 @@ import java.io.File;
 import java.util.Objects;
 
 
-public class WinInterface extends JFrame {
-    JButton clean, start;
-    JLabel l1;
-    //JLabel l2;
-    JLabel l3;
-    JLabel l4;
-    JTextField t1, t2;
-    JToolBar tool1;
-    JCheckBox analyze, complaint, analyzeFile, complaintFile, newResolutionsSearch, newResolutionsSave, turnOff;
-    eHandler handler = new eHandler();
+class WinInterface extends JFrame {
+    private final JButton clean, start;
+    private final JLabel l3;
+    private final JLabel l4;
+    private final JTextField t1, t2;
+    private final JCheckBox analyze, complaint, analyzeFile, complaintFile, newResolutionsSearch, newResolutionsSave, turnOff;
 
     public WinInterface(String s) {
         super(s);
@@ -29,8 +25,8 @@ public class WinInterface extends JFrame {
         newResolutionsSearch = new JCheckBox("3. Поиск новых наименований постановлений");
         newResolutionsSave = new JCheckBox("4. Сохранение обновленного списка постановлений");
         turnOff = new JCheckBox("По завершении выключить комп?");
-        l1 = new JLabel("Введи путь до .xml");
-        tool1 = new JToolBar("Выбор нужного действия", SwingConstants.VERTICAL);
+        JLabel l1 = new JLabel("Введи путь до .xml");
+        JToolBar tool1 = new JToolBar("Выбор нужного действия", SwingConstants.VERTICAL);
         tool1.add(analyze);
         tool1.add(complaint);
         tool1.add(newResolutionsSearch);
@@ -42,17 +38,15 @@ public class WinInterface extends JFrame {
         l4 = new JLabel("");
         t1 = new JTextField(25);
         t2 = new JTextField(25);
-        //t1.addActionListener(handler);
         add(tool1);
         add(l1);
         add(t1);
-        //add(l2);
         add(analyzeFile);
         add(complaintFile);
         add(turnOff);
-        //add(t2);
         add(clean);
         add(start);
+        eHandler handler = new eHandler();
         clean.addActionListener(handler);
         start.addActionListener(handler);
         add(l3);
@@ -64,8 +58,6 @@ public class WinInterface extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == start && checkPath(t1.getText())) {
-                InterfaceTread it = new InterfaceTread();
-                it.start();
                 AddonThread thread1 = new AddonThread(analyze.isSelected(), complaint.isSelected(),
                         analyzeFile.isSelected(), complaintFile.isSelected(), turnOff.isSelected(), t1.getText());
                 l4.setText("Поехали анализировать! казалось бы");
@@ -104,16 +96,14 @@ public class WinInterface extends JFrame {
                 }
 
             }
-
         }
     }
 
-    public class InterfaceTread extends Thread {
-        public void run(){
-            l3.setText("Привет из второго потока!");
+    void setl3(String s) {
+        if (s != null && !s.isBlank() && !s.isEmpty()) {
+            l3.setText(s);
         }
     }
-
     private boolean checkPath(String path) {
         if (new File(path).exists() /*&&
                 new File(path).isDirectory() &&
