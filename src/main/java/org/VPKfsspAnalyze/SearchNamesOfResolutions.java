@@ -20,7 +20,7 @@ class SearchNamesOfResolutions {
 
 
         for (String fullName : fullNames) {
-            ArrayList<String> namesTemp = namesSearch(lon.getArrayOfNames(), fullName);
+            ArrayList<String> namesTemp = namesSearch(fullName);
             for (int k = 0; k < namesTemp.size(); ++k) {
                 if (!lon.getArrayOfNames().contains(namesTemp.get(k))) {
                     lon.getArrayOfNames().add(namesTemp.get(k));
@@ -36,9 +36,9 @@ class SearchNamesOfResolutions {
         return fullNames;
     }
 
-    private ArrayList<String> namesSearch(ArrayList<String> namesOfResolutions, String filename) {
+    private ArrayList<String> namesSearch(String filename) {
         String content = "";
-        ArrayList<String> names = new ArrayList();
+        ArrayList<String> names = new ArrayList<String>();
 
         CreateContent cc = new CreateContent();
         content = cc.getString(filename, content);
