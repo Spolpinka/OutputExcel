@@ -10,12 +10,13 @@ public class Analyse {
     public static void main(String[] args) {
         //запрашиваем путь к папке, содержашей файлы для анализа
         JFrame.setDefaultLookAndFeelDecorated(true);
+        Object o = r.getGlassPane();
         r = new WinInterface("Анализ ответов приставов");
         r.setLocation(450, 150);
         r.setFocusableWindowState(true);
         r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         r.setSize(400, 500);
-        r.getGlassPane();
+
         r.setVisible(true);
 
     }
