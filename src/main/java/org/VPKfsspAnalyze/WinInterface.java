@@ -38,20 +38,19 @@ class WinInterface extends JFrame {
         t1 = new JTextField("путь до xml");
         //t2 = new JTextField();
         tool1.add(t1);
-        add(tool1);
-        /*add(l1);
-        add(t1);*/
-        add(analyzeFile);
-        add(complaintFile);
-        add(turnOff);
-        add(clean);
-        add(start);
+        tool1.add(analyzeFile);
+        tool1.add(complaintFile);
+        tool1.add(turnOff);
+        tool1.add(clean);
+        tool1.add(start);
+        tool1.add(l3);
+        tool1.add(l4);
+        getContentPane().add(tool1);
         eHandler handler = new eHandler();
         clean.addActionListener(handler);
         start.addActionListener(handler);
         t1.addActionListener(handler);
-        add(l3);
-        add(l4);
+
     }
 
     //класс по обработке нажатий
