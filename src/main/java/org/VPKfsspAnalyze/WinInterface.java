@@ -57,16 +57,31 @@ class WinInterface extends JFrame {
     public class eHandler implements ActionListener  {
 
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == start) {
+            if (e.getSource() == start || e.getSource() == t1) {
                 AddonThread thread1 = new AddonThread(analyze.isSelected(), complaint.isSelected(),
                         analyzeFile.isSelected(), complaintFile.isSelected(), turnOff.isSelected(), t1.getText());
                 thread1.start();
                 l4.setText("Поехали анализировать! казалось бы");
-                try {
+                XmlAnalyze xa = new XmlAnalyze();
+                if (analyze.isSelected()) {
+                    Analyse.setFieldInterface("привет из анализа xml");
+                    setl3("второй привет");
+                    l4.setText("третий привет");
+                    xa.analyseXml(t1.getText(), analyzeFile.isSelected());
+                }
+                if (complaint.isSelected()) {
+                    FormingComplaint fc = new FormingComplaint();
+                    fc.analyzeForComplaint(t1.getText(), complaintFile.isSelected());
+                }
+                if (turnOff.isSelected()) {
+                    TurnOff to = new TurnOff();
+                    to.getTurnOff();
+                }
+                /*try {
                     thread1.join();
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
-                }
+                }*/
             }
             if (e.getSource() == clean) {
                 t1.setText(null);

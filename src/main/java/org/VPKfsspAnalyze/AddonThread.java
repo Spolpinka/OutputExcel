@@ -15,7 +15,9 @@ class AddonThread extends Thread {
         this.path = path;
     }
     public void run() {
-        XmlAnalyze xa = new XmlAnalyze();
+        System.out.println("привет из доппотока");
+        Analyse.setFieldInterface("привет из анализа xml");
+        /*XmlAnalyze xa = new XmlAnalyze();
         if (isNeedAnalyze) {
             Analyse.setFieldInterface("привет из анализа xml");
             xa.analyseXml(path, isNeedAnalyzeFile);
@@ -27,6 +29,6 @@ class AddonThread extends Thread {
         if (turnOff) {
             TurnOff to = new TurnOff();
             to.getTurnOff();
-        }
+        }*/
     }
 }
