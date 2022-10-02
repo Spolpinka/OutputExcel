@@ -15,7 +15,6 @@ public class Analyse {
         r.setFocusableWindowState(true);
         r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         r.setSize(400, 500);
-        r.getGlassPane();
         r.setVisible(true);
 
     }

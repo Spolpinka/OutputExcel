@@ -12,7 +12,7 @@ class WinInterface extends JFrame {
     private final JButton clean, start;
     private final JLabel l3;
     private final JLabel l4;
-    private final JTextField t1, t2;
+    private final JTextField t1;
     private final JCheckBox analyze, complaint, analyzeFile, complaintFile, newResolutionsSearch, newResolutionsSave, turnOff;
 
     public WinInterface(String s) {
@@ -36,22 +36,21 @@ class WinInterface extends JFrame {
         l3 = new JLabel("");
         l4 = new JLabel("");
         t1 = new JTextField("путь до xml");
-        t2 = new JTextField(25);
+        //t2 = new JTextField();
         tool1.add(t1);
-        add(tool1);
-        /*add(l1);
-        add(t1);*/
-        add(analyzeFile);
-        add(complaintFile);
-        add(turnOff);
-        add(clean);
-        add(start);
+        tool1.add(analyzeFile);
+        tool1.add(complaintFile);
+        tool1.add(turnOff);
+        tool1.add(clean);
+        tool1.add(start);
+        tool1.add(l3);
+        tool1.add(l4);
+        getContentPane().add(tool1);
         eHandler handler = new eHandler();
         clean.addActionListener(handler);
         start.addActionListener(handler);
         t1.addActionListener(handler);
-        add(l3);
-        add(l4);
+
     }
 
     //класс по обработке нажатий
@@ -71,7 +70,6 @@ class WinInterface extends JFrame {
             }
             if (e.getSource() == clean) {
                 t1.setText(null);
-                t2.setText(null);
                 l3.setText("");
                 l4.setText("");
                 if (analyze.isSelected()) {
