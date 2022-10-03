@@ -65,7 +65,7 @@ class WinInterface extends JFrame {
                 XmlAnalyze xa = new XmlAnalyze();
                 if (analyze.isSelected()) {
                     Analyse.setFieldInterface("привет из анализа xml");
-                    setl3("второй привет");
+                    l3.setText("второй привет");
                     l4.setText("третий привет");
                     xa.analyseXml(t1.getText(), analyzeFile.isSelected());
                 }
