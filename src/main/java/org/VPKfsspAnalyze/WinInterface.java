@@ -25,7 +25,6 @@ class WinInterface extends JFrame {
         newResolutionsSearch = new JCheckBox("3. Поиск новых наименований постановлений");
         newResolutionsSave = new JCheckBox("4. Сохранение обновленного списка постановлений");
         turnOff = new JCheckBox("По завершении выключить комп?");
-        JLabel l1 = new JLabel("Введи путь до .xml");
         JToolBar tool1 = new JToolBar("Выбор нужного действия", SwingConstants.VERTICAL);
         tool1.add(analyze);
         tool1.add(complaint);
@@ -77,11 +76,7 @@ class WinInterface extends JFrame {
                     TurnOff to = new TurnOff();
                     to.getTurnOff();
                 }
-                /*try {
-                    thread1.join();
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }*/
+
             }
             if (e.getSource() == clean) {
                 t1.setText(null);
