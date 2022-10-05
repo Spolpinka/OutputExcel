@@ -22,7 +22,7 @@ class CreateContent {
             if (fullNamesForSubdir != null && fullNamesForSubdir.size() > maxSumOfFiles) return "Больше " +
                     maxSumOfFiles + "в поддиректории " + filename + " ты мне всю оперативку забил, балбес!";
             try {
-                StringBuilder contentBuilder = new StringBuilder(content);
+                StringBuilder contentBuilder = new StringBuilder(content);//что то тут не так для файла S01-17-311452-1
                 for (String s : fullNamesForSubdir) {
                     contentBuilder.append(Files.lines(Paths.get(s)).reduce("", String::concat));
                 }
