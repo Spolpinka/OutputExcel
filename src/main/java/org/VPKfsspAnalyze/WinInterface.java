@@ -25,7 +25,6 @@ class WinInterface extends JFrame {
         newResolutionsSearch = new JCheckBox("3. Поиск новых наименований постановлений");
         newResolutionsSave = new JCheckBox("4. Сохранение обновленного списка постановлений");
         turnOff = new JCheckBox("По завершении выключить комп?");
-        JLabel l1 = new JLabel("Введи путь до .xml");
         JToolBar tool1 = new JToolBar("Выбор нужного действия", SwingConstants.VERTICAL);
         tool1.add(analyze);
         tool1.add(complaint);
@@ -65,8 +64,8 @@ class WinInterface extends JFrame {
                 XmlAnalyze xa = new XmlAnalyze();
                 if (analyze.isSelected()) {
                     Analyse.setFieldInterface("привет из анализа xml");
-                    l3.setText("второй привет");
-                    l4.setText("третий привет");
+                    /*l3.setText("второй привет");
+                    l4.setText("третий привет");*/
                     xa.analyseXml(t1.getText(), analyzeFile.isSelected());
                 }
                 if (complaint.isSelected()) {
@@ -77,11 +76,7 @@ class WinInterface extends JFrame {
                     TurnOff to = new TurnOff();
                     to.getTurnOff();
                 }
-                /*try {
-                    thread1.join();
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }*/
+
             }
             if (e.getSource() == clean) {
                 t1.setText(null);
