@@ -14,16 +14,16 @@ import java.io.IOException;
 class Output {
     static void txt(String[] @NotNull [] fullBase, String path) {
         try (FileWriter writer = new FileWriter(path.substring(0, path.lastIndexOf('\\') + 1) + "result.txt", false)) {
-            for (int i = 0; i < fullBase.length; i++) {
-                for (int j = 0; j < fullBase[i].length; j++) {
-                    writer.write(fullBase[i][j] + ";");
+            for (String[] strings : fullBase) {
+                for (String string : strings) {
+                    writer.write(string + ";");
                 }
                 writer.write("\n");
             }
             writer.close();
             System.out.println("Все ок, ищи файл " + path.substring(0, path.lastIndexOf('\\') + 1) + "result.txt");
         } catch (IOException ex) {
-
+            System.out.println("ошибка записи txt");
         }
     }
 

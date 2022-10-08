@@ -82,7 +82,9 @@ class FormingComplaint {
         }
         if (isNeedComplaintFile) {
             GetTime gt = new GetTime();
-            Output.excel(baseOfComplaint, path, "reportComplains" + gt.getTime());
+            OutputThreads ot1 = new OutputThreads(baseOfComplaint, path, "reportComplains" + gt.getTime());
+            ot1.start();
+            System.out.println("второй пошел");
         }
 
 
@@ -135,9 +137,13 @@ class FormingComplaint {
         };
         //считаем общую сумму запросов по счетам
         int sumOfAcc = 0;
-        for (int i = 0; i < acc.length; i++) {
-            if (acc[i] != null) {
-                sumOfAcc += Integer.parseInt(acc[i]);
+        for (String value : acc) {
+            if (value != null) {
+                try {
+                    sumOfAcc += Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         //считаем общую сумму постановлений об обращении взыскания на деньги
@@ -148,8 +154,12 @@ class FormingComplaint {
                 , line[23] //Постановление об обращении взыскания на денежные средства в иностранной валюте при исчислении долга в иностранной валюте
         };
         int sumOfRecovery = 0;
-        for (int i = 0; i < recovery.length; i++) {
-            sumOfRecovery += Integer.parseInt(recovery[i]);
+        for (String value : recovery) {
+            try {
+                sumOfRecovery += Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            }
         }
         //смотрим были ли ненулевые счета
         int notNullAccs = Integer.parseInt(line[42]);
@@ -196,9 +206,13 @@ class FormingComplaint {
                 , line[54] // Уведомление о нереализации имущества на комиссионных началах
         };
         int sumResolutionsForRealisation = 0;
-        for (int i = 0; i < realisation.length; i++) {
-            if (realisation[i] != null) {
-                sumResolutionsForRealisation += Integer.parseInt(realisation[i]);
+        for (String value : realisation) {
+            if (value != null) {
+                try {
+                    sumResolutionsForRealisation += Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         if (transport != null && transport.length() > 10 && (line[44] == null || line[44].equals("0"))) {
@@ -232,9 +246,13 @@ class FormingComplaint {
                 , line[54] // Уведомление о нереализации имущества на комиссионных началах
         };
         int sumOfResolutionsForRealisation = 0;
-        for (int i = 0; i < realisation.length; i++) {
-            if (realisation[i] != null) {
-                sumOfResolutionsForRealisation += Integer.parseInt(realisation[i]);
+        for (String value : realisation) {
+            if (value != null) {
+                try {
+                    sumOfResolutionsForRealisation += Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         }
