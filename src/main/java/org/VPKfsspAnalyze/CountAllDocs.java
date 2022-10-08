@@ -15,6 +15,7 @@ class CountAllDocs {
 
         //переменные для типов ответов
         String deloNumForSearch = "<fssp:DeloNum>";
+        String deloNumStopSearch = "</fssp:DeloNum>";
         String reject = "Уведомление об отсутствии исполнительного производства";
         String notReject = "Уведомление о ходе исполнительного производства";
         String negative = "Уведомление об отказе в предоставлении информации об исполнительном производстве";
@@ -103,10 +104,11 @@ class CountAllDocs {
         //ищем и вставляем в базу номер ИП
         if (content.contains(deloNumForSearch)) {
             try {
-                String deloNum = content.substring(content.indexOf(deloNumForSearch) + deloNumForSearch.length(), content.indexOf("-ИП") + 3);
+                String deloNum = content.substring(content.indexOf(deloNumForSearch) + deloNumForSearch.length(), content.indexOf(deloNumStopSearch));
                 counts.add(deloNum);
             } catch (Exception e) {
                 System.out.println(e + " в файле " + filename);
+                counts.add("№ ИП в файле отсутствует / некорректный");
             }
         } else {
             counts.add("№ ИП в файле отсутствует");
