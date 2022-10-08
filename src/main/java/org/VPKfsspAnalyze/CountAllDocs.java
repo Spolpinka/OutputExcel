@@ -66,7 +66,9 @@ class CountAllDocs {
 
         //определяем тип ответа
 
-        if (content.contains(reject)) {
+        if (content.contains(notReject)) {
+            counts.add(notReject);
+        } else if (content.contains(reject)) {
             counts.add(reject);
             counts.add(getTextOfError.getText(content));
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
@@ -75,8 +77,6 @@ class CountAllDocs {
             counts.add(middleName);
             counts.add(ID);
             return counts;
-        } else if (content.contains(notReject)) {
-            counts.add(notReject);
         } else if (content.contains(negative)) {
             counts.add(negative);
             counts.add(getTextOfError.getText(content));
