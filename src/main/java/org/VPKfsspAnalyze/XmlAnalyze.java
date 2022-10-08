@@ -86,21 +86,21 @@ class XmlAnalyze {
         /*System.out.println("остаток массива имен после последнего выделения " + fullNames.size());
         System.out.println("длина массива для первого потока " + forFirstThread.size() + " а должна быть " + lengthForFirst);*/
         //создаем потоки
-        MultiThread multiThread1 = new MultiThread(forFirstThread, 0);
-        multiThread1.start();
-        MultiThread multiThread2 = new MultiThread(forSecondThread, lengthForFirst);
-        multiThread2.start();
-        MultiThread multiThread3 = new MultiThread(forThirdThread, lengthForFirst * 2);
-        multiThread3.start();
-        MultiThread multiThread4 = new MultiThread(forLastThread, lengthForFirst * 3);
-        multiThread4.start();
+        AnalyzeThread analyzeThread1 = new AnalyzeThread(forFirstThread, 0);
+        analyzeThread1.start();
+        AnalyzeThread analyzeThread2 = new AnalyzeThread(forSecondThread, lengthForFirst);
+        analyzeThread2.start();
+        AnalyzeThread analyzeThread3 = new AnalyzeThread(forThirdThread, lengthForFirst * 2);
+        analyzeThread3.start();
+        AnalyzeThread analyzeThread4 = new AnalyzeThread(forLastThread, lengthForFirst * 3);
+        analyzeThread4.start();
 
         //ждем, пока все потоки отработают
         try {
-            multiThread1.join();
-            multiThread2.join();
-            multiThread3.join();
-            multiThread4.join();
+            analyzeThread1.join();
+            analyzeThread2.join();
+            analyzeThread3.join();
+            analyzeThread4.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -110,7 +110,9 @@ class XmlAnalyze {
         //выводим в эксель
         GetTime gt = new GetTime();
         if (isNeedAnalyzeFile) {
-            Output.excel(Analyse.fullBase, path, "MainReport" + gt.getTime());
+            OutputThreads ot = new OutputThreads(Analyse.fullBase, path, "MainReport" + gt.getTime());
+            ot.start();
+            System.out.println("поехал первый");
         }
     }
 }
