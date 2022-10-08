@@ -4,7 +4,7 @@ class GetTextOfError {
     protected String getText(String content) {
         String decomp = "<fssp:Text>";
         String decompEnd = "</fssp:Text>";
-        String text = "";
+        String text = "описание причины отказа отсутствует";
         try {
             text = content.substring(content.indexOf(decomp) + decomp.length(), content.indexOf(decompEnd));
         } catch (Exception e) {
