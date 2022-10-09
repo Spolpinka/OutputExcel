@@ -112,7 +112,7 @@ class XmlAnalyze {
         if (isNeedAnalyzeFile) {
             OutputThreads ot = new OutputThreads(Analyse.fullBase, path, "MainReport" + gt.getTime());
             ot.start();
-            System.out.println("поехал первый");
+            System.out.println("пошел поток записи общего отчета");//удалить
         }
     }
 }
