@@ -84,7 +84,7 @@ class FormingComplaint {
             GetTime gt = new GetTime();
             OutputThreads ot1 = new OutputThreads(baseOfComplaint, path, "reportComplains" + gt.getTime());
             ot1.start();
-            System.out.println("второй пошел");
+            System.out.println("пошел поток записи жалоб");//удалить
         }
 
 
