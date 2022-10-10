@@ -108,8 +108,8 @@ class XmlAnalyze {
         //Output.txt(fullBase, path);
 
         //выводим в эксель
-        GetTime gt = new GetTime();
         if (isNeedAnalyzeFile) {
+            GetTime gt = new GetTime();
             OutputThreads ot = new OutputThreads(Analyse.fullBase, path, "MainReport" + gt.getTime());
             ot.start();
             System.out.println("пошел поток записи общего отчета");
