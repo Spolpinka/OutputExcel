@@ -70,5 +70,6 @@ class Output {
             }
         }
         System.out.println("Все ок, ищи файл " + path.substring(0, path.lastIndexOf('\\') + 1) + xlsxFileName + ".xlsx");
+        Runtime.getRuntime().gc();//запуск сборщика мусора
     }
 }
