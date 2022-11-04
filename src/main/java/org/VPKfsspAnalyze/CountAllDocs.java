@@ -3,11 +3,11 @@ package org.VPKfsspAnalyze;
 import java.util.ArrayList;
 
 class CountAllDocs {
-    static int countOfFiles;
+    private static int countOfFiles;
 
     public ArrayList<String> countDocs(String filename) {
         ListOfNames listOfNames = new ListOfNames();
-        ArrayList<String> counts = new ArrayList<>();
+        ArrayList<String> counts = new ArrayList<>();//массив для сбора показателей по отдельным постановлениям
         SaveObjects so = new SaveObjects();
 
         //создаем счетчики
@@ -20,10 +20,11 @@ class CountAllDocs {
         String notReject = "Уведомление о ходе исполнительного производства";
         String negative = "Уведомление об отказе в предоставлении информации об исполнительном производстве";
         String message = "Сообщение (уведомление) с ответом на запрос";
-        String content = "";
+        String content = "";//строка, которая соберет все содержимое файла
 
         //идентификатор первой строкой
-        counts.add(filename.substring(filename.lastIndexOf("\\") + 1, filename.lastIndexOf(" ")));
+        String id = filename.substring(filename.lastIndexOf("\\") + 1, filename.lastIndexOf(" "));
+        counts.add(id);
 
         //получаем строку из файла (если поддиректория, то строка содержит все файлы)
         CreateContent cc = new CreateContent();
@@ -35,7 +36,7 @@ class CountAllDocs {
         //получаем текст пояснений к отказу
         GetTextOfError getTextOfError = new GetTextOfError();
 
-        //считываем сумма долга по данным ФССП
+        //считываем сумму долга по данным ФССП
         String sumOfDebt = sumOfDebt(content);
 
         //считываем ФИО пристава
@@ -64,14 +65,16 @@ class CountAllDocs {
         } catch (Exception e) {
             System.out.println(ID);
         }
-
+        RejectionBase rb = new RejectionBase();
         //определяем тип ответа
 
         if (content.contains(notReject)) {
+            rb.addRejection(id, notReject, "0");
             counts.add(notReject);
         } else if (content.contains(reject)) {
+            rb.addRejection(id, reject, getTextOfError.getText(content));
             counts.add(reject);
-            counts.add(getTextOfError.getText(content));
+            counts.add("0");
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -79,8 +82,9 @@ class CountAllDocs {
             counts.add(ID);
             return counts;
         } else if (content.contains(negative)) {
+            rb.addRejection(id, negative, getTextOfError.getText(content));
             counts.add(negative);
-            counts.add(getTextOfError.getText(content));
+            counts.add("0");
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -88,8 +92,9 @@ class CountAllDocs {
             counts.add(ID);
             return counts;
         } else if (content.contains(message)) {
+            rb.addRejection(id, message, getTextOfError.getText(content));
             counts.add(message);
-            counts.add(getTextOfError.getText(content));
+            counts.add("0");
             fillingOfCounts(counts);//заполняем нулями для соответствия полей
             counts.add(lastName);
             counts.add(firstName);
@@ -104,7 +109,8 @@ class CountAllDocs {
         //ищем и вставляем в базу номер ИП
         if (content.contains(deloNumForSearch)) {
             try {
-                String deloNum = content.substring(content.indexOf(deloNumForSearch) + deloNumForSearch.length(), content.indexOf(deloNumStopSearch));
+                String deloNum = content.substring(content.indexOf(deloNumForSearch) + deloNumForSearch.length(),
+                        content.indexOf(deloNumStopSearch));
                 counts.add(deloNum);
             } catch (Exception e) {
                 System.out.println(e + " в файле " + filename);
