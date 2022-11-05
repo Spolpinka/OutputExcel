@@ -12,7 +12,9 @@ public class RejectionBase {
 
     public void writeRejectionFile(String path) {
         GetTime gt = new GetTime();
-        String fileName = "RejectionsReport" + gt.getTime() + ".xlsx";
+        String fileName = "RejectionsReport" + gt.getTime() ;
         OutputThreads ot = new OutputThreads(rejectionBase, path, fileName);
+        ot.start();
+        System.out.println("Пошёл поток записи файла отчетов об отказах");
     }
 }

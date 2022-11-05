@@ -109,10 +109,12 @@ class XmlAnalyze {
 
         //выводим в эксель
         if (isNeedAnalyzeFile) {
+            RejectionBase rb = new RejectionBase();
             GetTime gt = new GetTime();
             OutputThreads ot = new OutputThreads(Analyse.fullBase, path, "MainReport" + gt.getTime());
             ot.start();
             System.out.println("пошел поток записи общего отчета");
+            rb.writeRejectionFile(path);
         }
     }
 }
