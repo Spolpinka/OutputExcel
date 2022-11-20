@@ -6,7 +6,7 @@ public class Analyse {
     static String[][] fullBase;
 
     static WinInterface r;
-
+//вот где то здесь надо доработать, чтобы JFrame не тормозил, хрен знает почему
     public static void main(String[] args) {
         //запрашиваем путь к папке, содержашей файлы для анализа
         JFrame.setDefaultLookAndFeelDecorated(true);
