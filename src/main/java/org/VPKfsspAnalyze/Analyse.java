@@ -18,6 +18,7 @@ public class Analyse {
         r.setVisible(true);
 
     }
+    //вот никто не знает, почему JFrame не работает нормально
 
     static void setFieldInterface(String s) {
         r.setl3(s);
