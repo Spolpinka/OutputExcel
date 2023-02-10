@@ -224,7 +224,7 @@ class CountAllDocs {
                 sumOfDebt = "ошибка, сумма задолженности не в первой части IPAcctRecords";
             }
         } else {
-            sumOfDebt = null;
+            sumOfDebt = "0";
         }
         return sumOfDebt;
     }
